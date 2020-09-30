@@ -12,8 +12,11 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="./css/util.css">
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<link rel="stylesheet" type="text/css" href="./css/font.css">
+	<script src='https://cdn.jsdelivr.net/npm/sweetalert2'></script>
+
 	<!--===============================================================================================-->
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,20 +25,30 @@
 	<link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
 </head>
 
+<script>
+	function Hello() {
+		Swal.fire(
+			'แตกหนึ่ง!',
+			'สวยพี่สวย!',
+			'success'
+		)
+	};
+</script>
+
 <body>
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic">
 					<div class="vertical-center">
-						<img src="images/student.png" width="316px" alt="IMG">
+						<img src="images/register.png" alt="IMG">
 					</div>
-				</div>
-				<form action="./PHPFunction/Register.php" method="POST" class="login100-form validate-form">
-
-					<span class="login100-form-title">
-						อินเตอร์เน็ตโรงเรียนเมืองยมวิทยาคาร
+					<span class="login-left-title">
+						ลงทะเบียนใช้งาน
 					</span>
+				</div>
+				
+				<form action="./PHPFunction/Register.php" method="POST" class="login100-form validate-form">
 					<div class="wrap-input100 validate-input">
 						<div class="row">
 							<div class="input-field col s6">
@@ -82,10 +95,26 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s6">
-								<button class="btn waves-effect waves-light deep-purple" type="button">ลงทะเบียนใช้งาน</button>
+								<select name="Degree" id="Degree">
+									<option value="" disabled selected>ระดับชั้น</option>
+						
+								</select>
+								<label>ปีการศึกษา</label>
 							</div>
 							<div class="input-field col s6">
-								<button class="btn waves-effect waves-light red darken-1" type="button">ยกเลิกการลงทะเบียน</button>
+								<select name="Room" id="Room">
+									<option value="" disabled selected>ห้อง</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<button class="btn waves-effect waves-light deep-purple"
+									type="button">ลงทะเบียนใช้งาน</button>
+							</div>
+							<div class="input-field col s6">
+								<button class="btn waves-effect waves-light red darken-1"
+									type="button">ยกเลิกการลงทะเบียน</button>
 							</div>
 						</div>
 				</form>
@@ -128,6 +157,16 @@
 		var months_th_mini = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.",
 			"ธ.ค.",
 		];
+		
+
+		for (let i = 0; i < 5; i++) {
+			AddIntoSelect("Room", i + 1, ("ห้อง " + (i+1)));
+		}
+
+		for (let i = 0; i < 6; i++) {
+			AddIntoSelect("Degree", i + 1, ("มัธยมศึกษาปีที่ " + (i+1)));
+		}
+
 
 		for (let i = 0; i < months_th.length; i++) {
 			const element = months_th[i];
