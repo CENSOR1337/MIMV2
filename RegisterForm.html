@@ -41,13 +41,16 @@
 			<div class="wrap-login100">
 				<div class="login100-pic">
 					<div class="vertical-center">
-						<img src="images/register.png" alt="IMG">
+						<img src="images/student.png" alt="IMG">
+						<span class="login100-form-title">
+							<br>
+							<font style="font-size: 18px;">ระบบลงทะเบียนใช้งานระบบอินเตอร์เน็ต</font><br>
+							<font style="font-size: 18px;">โรงเรียนเมืองยมวิทยาคาร</font><br>
+						</span>
 					</div>
-					<span class="login-left-title">
-						ลงทะเบียนใช้งาน
-					</span>
+
 				</div>
-				
+
 				<form action="./PHPFunction/Register.php" method="POST" class="login100-form validate-form">
 					<div class="wrap-input100 validate-input">
 						<div class="row">
@@ -97,7 +100,7 @@
 							<div class="input-field col s6">
 								<select name="Degree" id="Degree">
 									<option value="" disabled selected>ระดับชั้น</option>
-						
+
 								</select>
 								<label>ปีการศึกษา</label>
 							</div>
@@ -109,12 +112,16 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s6">
-								<button class="btn waves-effect waves-light deep-purple"
-									type="button">ลงทะเบียนใช้งาน</button>
+								<center>
+									<button class="btn waves-effect waves-light deep-purple"
+										type="button">ลงทะเบียนใช้งาน</button>
+								</center>
 							</div>
 							<div class="input-field col s6">
-								<button class="btn waves-effect waves-light red darken-1"
-									type="button">ยกเลิกการลงทะเบียน</button>
+								<center>
+									<button class="btn waves-effect waves-light red darken-1"
+										type="button">ยกเลิกการลงทะเบียน</button>
+								</center>
 							</div>
 						</div>
 				</form>
@@ -157,14 +164,14 @@
 		var months_th_mini = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.",
 			"ธ.ค.",
 		];
-		
+
 
 		for (let i = 0; i < 5; i++) {
-			AddIntoSelect("Room", i + 1, ("ห้อง " + (i+1)));
+			AddIntoSelect("Room", i + 1, ("ห้อง " + (i + 1)));
 		}
 
 		for (let i = 0; i < 6; i++) {
-			AddIntoSelect("Degree", i + 1, ("มัธยมศึกษาปีที่ " + (i+1)));
+			AddIntoSelect("Degree", i + 1, ("มัธยมศึกษาปีที่ " + (i + 1)));
 		}
 
 

@@ -186,11 +186,7 @@ iframe {
 }
 .vertical-center {
   max-width: 316px;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  padding-top: 25%;
 }
 
 
@@ -210,10 +206,6 @@ iframe {
   padding-bottom: 54px;
 }
 
-.login-left-title{
-  font-size: 18px;
-  text-align: left;
-}
 
 /*---------------------------------------------*/
 .wrap-input100 {
