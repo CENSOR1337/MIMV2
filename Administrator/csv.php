@@ -1,4 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
 <?php
+
+function InsertProfileIntoDB($ProfileArray)
+{
+
+    require_once "../config/connects.php";
+
+    $InsertData = "'" . implode("'),('", array_map(function ($entry) {
+        return implode("', '", $entry);
+    }, $ProfileArray)) . "'";
+
+
+    $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`)
+    VALUES ($InsertData)";
+    /*
+    $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`) VALUES ('1559500032442', '1695', 'ณัฐพล', 'อุดอุ่น'),
+    ('1549900762715', '1696', 'เดชาธร', 'บำเพ็ญบุญ')";
+*/
+    if ($conn->query($sql) === true) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+}
 
 $AccpetedExt = array("csv");
 if ($_POST) {
@@ -12,7 +48,7 @@ if ($_POST) {
     if (in_array($ext, $AccpetedExt)) {
 
         $CsvHandle = fopen($TempFile, "r");
-        $TargetString = array("เลขประจำตัวประชาชน", "Identify", "เลขประจำตัวนักเรียน", "ชื่อ", "นามสกุล");
+        $TargetString = array("รหัสประจำตัวประชาชน", "เลขประจำตัวนักเรียน", "ชื่อ", "นามสกุล");
         $SortingIndex = [];
         $Return = [];
 
@@ -37,12 +73,7 @@ if ($_POST) {
                 }
             }
 
-            foreach ($Return as &$Value) {
-                for ($i = 0; $i < count($SortingIndex); $i++) {
-                    echo $Value[$i] . " ";
-                }
-                echo "<br>";
-            }
+            InsertProfileIntoDB($Return);
 
             fclose($CsvHandle);
         }
