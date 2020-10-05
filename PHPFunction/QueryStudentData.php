@@ -1,6 +1,7 @@
 <?php
 ob_start();
 ob_end_clean();
+/*
 require '../config/config.php';
 
 $StudentID = $_POST['StudentID'];
@@ -16,6 +17,8 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
+*/
 
-$CheckStatusReturn = array($StudentID);
+$CheckStatusReturn = array($_POST['StudentID']);
+
 print json_encode($CheckStatusReturn);
