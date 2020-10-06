@@ -22,12 +22,14 @@ function InsertProfileIntoDB($ProfileArray)
     }, $ProfileArray)) . "'";
 
 
-    $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`)
+
+
+    $sql = "INSERT INTO `accessibleprofiles` (`IndentifyID`, `Firstname`, `Lastname`) 
     VALUES ($InsertData)";
     /*
     $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`) VALUES ('1559500032442', '1695', 'ณัฐพล', 'อุดอุ่น'),
     ('1549900762715', '1696', 'เดชาธร', 'บำเพ็ญบุญ')";
-*/
+    */
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
     } else {
@@ -46,9 +48,8 @@ if ($_POST) {
         $ext = $ext[count($ext) - 1];
     }
     if (in_array($ext, $AccpetedExt)) {
-
         $CsvHandle = fopen($TempFile, "r");
-        $TargetString = array("รหัสประจำตัวประชาชน", "เลขประจำตัวนักเรียน", "ชื่อ", "นามสกุล");
+        $TargetString = array("รหัสประจำตัวประชาชน", "ชื่อ", "นามสกุล");
         $SortingIndex = [];
         $Return = [];
 

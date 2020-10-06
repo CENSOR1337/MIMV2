@@ -21,18 +21,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
-<script>
-	function Hello() {
-		Swal.fire(
-			'แตกหนึ่ง!',
-			'สวยพี่สวย!',
-			'success'
-		)
-	};
-</script>
-
-
-
 <body>
 	<div class="limiter">
 		<div class="container-login100">
@@ -55,6 +43,17 @@
 					</span>
 					<div id="Form_1" class="vertical-center-form">
 						<div class="wrap-input100">
+
+							<div class="row">
+								<div class="input-field col s6">
+									<input name="Firstname" id="Firstname" type="text" class="validate">
+									<label for="Firstname">ชื่อ</label>
+								</div>
+								<div class="input-field col s6">
+									<input name="Lastname" id="Lastname" type="text" class="validate">
+									<label for="Lastname">นามสกุล</label>
+								</div>
+							</div>
 							<div class="row">
 								<div class="input-field col s12">
 									<input name="Identify" maxlength="13" id="Identify" type="text" class="validate"
@@ -64,11 +63,14 @@
 								</div>
 							</div>
 							<div class="row">
-								
+
 								<div class="input-field col s12">
 									<center>
-										<button class="btn waves-effect waves-light deep-purple" type="button"
-											onclick="StartChangeContent('Form_1', 'Form_2');">ตรวจสอบสิทธิ์</button>
+										<div style="display: none;" id="LoadingBar" class="progress">
+											<div class="indeterminate"></div>
+										</div>
+										<button id="CheckIDButton" class="btn waves-effect waves-light deep-purple"
+											type="button" onclick="QueryIdentifyID();">ตรวจสอบสิทธิ์</button>
 									</center>
 								</div>
 							</div>
@@ -77,20 +79,20 @@
 
 
 					<div id="Form_2" style="display: none;">
-						<div class="row">
-							<div class="input-field col s6">
-								<input name="Firstname" id="Firstname" type="text" class="validate">
-								<label for="Firstname">ชื่อ</label>
-							</div>
-							<div class="input-field col s6">
-								<input name="Lastname" id="Lastname" type="text" class="validate">
-								<label for="Lastname">นามสกุล</label>
-							</div>
-						</div>
+
 						<div class="row">
 							<div class="input-field col s12">
 								<input name="Email" id="Email" type="email" class="validate">
 								<label for="Email">อีเมล</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<select id="Gender" name="Gender">
+									<option value="Female">ชาย</option>
+									<option value="Male">หญิง</option>
+								</select>
+								<label>คำนำหน้า</label>
 							</div>
 						</div>
 						<div class="row">
@@ -139,21 +141,171 @@
 							</div>
 							<div class="input-field col s6">
 								<center>
-									<button class="btn waves-effect waves-light red darken-1"
-										type="button" onclick="StartChangeContent('Form_2','Form_1');">ยกเลิกการลงทะเบียน</button>
+									<button class="btn waves-effect waves-light red darken-1" type="button"
+										onclick="StartChangeContent('Form_2','Form_1'); ToggleForm_1(true);">ยกเลิกการลงทะเบียน</button>
 								</center>
 							</div>
 						</div>
 					</div>
-
-
-
 				</form>
 			</div>
 		</div>
 	</div>
 
+
+	<div id="MismatchTable" style="display: none;">
+		<table border="1" width="50%">
+			<thead>
+				<tr>
+					<td class="right">ชื่อที่ปรากฏในระบบ :&nbsp;</td>
+					<td id='MismatchName' align="left">&nbsp;เมธี ตนะทิพย์</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="right">ชื่อจากแบบฟอร์ม :&nbsp;</td>
+					<td id='FormMismatchName' align="left">&nbsp;Metee Tanathip</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<center>ต้องการใช้ชื่อตามแบบฟอร์มหรือไม่</center>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 	<script>
+		// SweetAlert 2
+
+		function DataMismatch(Identify, Firstname, Lastname) {
+
+
+			FormIdentify = document.getElementById('Identify').value;
+			FormFirstname = document.getElementById('Firstname').value;
+			FormLastname = document.getElementById('Lastname').value;
+
+
+			document.getElementById('MismatchName').innerText = Firstname + " " + Lastname;
+			document.getElementById('FormMismatchName').innerText = FormFirstname + " " + FormLastname;
+
+
+			Swal.fire({
+				title: 'ชื่อไม่เหมือนกัน',
+				showDenyButton: true,
+				showCancelButton: true,
+				html: document.getElementById('MismatchTable').innerHTML,
+				confirmButtonText: `ดำเนินการต่อ`,
+				denyButtonText: `แก้ไข`,
+				cancelButtonText: "ยกเลิก",
+			}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+				if (result.isConfirmed) {
+					Swal.fire('Saved!', '', 'success')
+				} else if (result.isDenied) {
+					Swal.fire('Changes are not saved', '', 'info')
+				} else {
+					ToggleLoadingBar(false);
+					ToggleForm_1(true);
+				}
+			})
+		}
+
+		function NotFoundData() {
+			Swal.fire({
+				icon: 'error',
+				title: (document.getElementById('Identify').value),
+				text: 'ไม่พบอยู่ในระบบฐานข้อมูล',
+				footer: 'กรุณาตรวจสอบหมายเลขของคุณหรือติดต่อผู้ดูแลระบบ',
+				confirmButtonText: 'เข้าใจแล้ว',
+			})
+		};
+
+		function MissingInput() {
+			Swal.fire({
+				icon: 'error',
+				title: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+				confirmButtonText: 'เข้าใจแล้ว',
+			})
+		};
+	</script>
+
+	<script>
+		function ToggleForm_1(boolean) {
+			if (boolean) {
+				document.getElementById('CheckIDButton').style.display = 'block';
+				document.getElementById('Identify').disabled = false;
+				document.getElementById('Firstname').disabled = false;
+				document.getElementById('Lastname').disabled = false;
+			} else {
+				document.getElementById('CheckIDButton').style.display = 'none';
+				document.getElementById('Identify').disabled = true;
+				document.getElementById('Firstname').disabled = true;
+				document.getElementById('Lastname').disabled = true;
+			}
+
+		}
+
+		function ToggleLoadingBar(Boolean) {
+			if (Boolean) {
+				document.getElementById("LoadingBar").style.display = "block";
+			} else {
+				document.getElementById("LoadingBar").style.display = "none";
+			}
+		}
+
+		function InsertProfilesData() {
+
+		}
+
+		function QueryIdentifyID() {
+
+			Identify = document.getElementById('Identify').value;
+			Firstname = document.getElementById('Firstname').value;
+			Lastname = document.getElementById('Lastname').value;
+			/*
+						if(!Identify || !Firstname || !Lastname){
+							MissingInput();
+							return;
+							
+						}
+			*/
+			ToggleLoadingBar(true);
+			ToggleForm_1(false);
+
+			AjaxOBJ = $.ajax({
+				type: "POST",
+				url: "./PHPFunction/QueryProfileIdentify.php",
+				error: function (ts) {
+					alert(ts.responseText)
+				}, // or console.log(ts.responseText)
+				dataType: "json",
+				data: {
+					Identify: Identify,
+					Firstname: Firstname,
+					Lastname: Lastname
+				}
+			});
+
+			AjaxOBJ.done(function (ResponsedMsg) {
+				if (ResponsedMsg['Status'] == 'success') {
+					ToggleLoadingBar(false);
+					StartChangeContent("Form_1", "Form_2");
+				} else if (ResponsedMsg['Status'] == 'mismatch') {
+					DataMismatch(ResponsedMsg['Identify'], ResponsedMsg['Firstname'], ResponsedMsg['Lastname']);
+				} else if (ResponsedMsg['Status'] == 'error') {
+					NotFoundData();
+					ToggleLoadingBar(false);
+					ToggleForm_1(true);
+				}
+			});
+
+			AjaxOBJ.fail(function () {
+				alert("error");
+			});
+
+		};
+
 		function EndChangeContent(ID, Value) {
 			document.getElementById(ID).style.display = "none";
 			var element = document.getElementById(Value);
@@ -200,7 +352,6 @@
 			}
 		}
 
-
 		var months_th = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
 			"กันยายน",
 			"ตุลาคม", "พฤศจิกายน", "ธันวาคม",
@@ -228,11 +379,10 @@
 		}
 		let date = new Date().getFullYear();
 
-		for (let i = 0; i < 150; i++) {
-			AddIntoSelect("BirthYears", date - (i + 1), (date - (i + 1)) + 543);
-
+		for (let i = 0; i < 50; i++) {
+			AddIntoSelect("BirthYears", date - (i), (date - (i)) + 543);
 			if (!(i > 10)) {
-				AddIntoSelect("AcademicYear", date - (i + 1), (date - (i + 1)) + 543);
+				AddIntoSelect("AcademicYear", date - (i), (date - (i)));
 			}
 		}
 	</script>
