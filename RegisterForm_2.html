@@ -66,8 +66,8 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<input name="Email" id="Email" type="email" class="validate">
-									<label for="Email">อีเมล</label>
+									<input type="text" class="datepicker">
+									<label for="Email">วัน</label>
 								</div>
 							</div>
 							<div class="row">
@@ -136,9 +136,46 @@
 	<script type="text/javascript" src="js/materialize.min.js"></script>
 	<!--===============================================================================================-->
 	<script>
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
+		$(document).ready(function () {
+			currentYear = (new Date().getFullYear()) + 543;
+			$('.datepicker').datepicker({
+				i18n: {
+					cancel: 'ยกเลิก',
+					clear: 'ล้าง',
+					done: 'เสร็จสิ้น',
+					weekdaysShort: [
+						'อา',
+						'จ',
+						'อ',
+						'พ',
+						'พฤ',
+						'ศ',
+						'ส'
+					],
+					weekdays: [
+						'อาทิตย์',
+						'จันทร์',
+						'อังคาร',
+						'พุธ',
+						'พฤหัสบดี',
+						'ศุกร์',
+						'เสาร์'
+					],
+					monthsShort: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.",
+						"ต.ค.", "พ.ย.",
+						"ธ.ค."
+					],
+					months: ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม",
+						"สิงหาคม", "กันยายน",
+						"ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+					]
+
+				},
+				format: 'dddd / dd / mmmm / yyyy',
+				yearRange: [currentYear-100, currentYear],
+				setDefaultDate: new Date().getDate()
+			});
+		});
 	</script>
 	<script>
 		// init select of materilize css

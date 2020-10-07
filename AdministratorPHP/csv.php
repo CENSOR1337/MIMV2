@@ -24,12 +24,9 @@ function InsertProfileIntoDB($ProfileArray)
 
 
 
-    $sql = "INSERT INTO `AccessibleProfiles` (`IndentifyID`, `Firstname`, `Lastname`) 
+    $sql = "INSERT INTO `AccessibleProfiles` (`IndentifyID`, `StudentID`, `Firstname`, `Lastname`) 
     VALUES ($InsertData)";
-    /*
-    $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`) VALUES ('1559500032442', '1695', 'ณัฐพล', 'อุดอุ่น'),
-    ('1549900762715', '1696', 'เดชาธร', 'บำเพ็ญบุญ')";
-    */
+    
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
     } else {
@@ -49,7 +46,7 @@ if ($_POST) {
     }
     if (in_array($ext, $AccpetedExt)) {
         $CsvHandle = fopen($TempFile, "r");
-        $TargetString = array("รหัสประจำตัวประชาชน", "ชื่อ", "นามสกุล");
+        $TargetString = array("รหัสประจำตัวประชาชน", "รหัสประจำตัวนักเรียน", "ชื่อ", "นามสกุล");
         $SortingIndex = [];
         $Return = [];
 

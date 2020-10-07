@@ -22,26 +22,30 @@
 </head>
 
 <body>
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic">
+
 					<div class="vertical-center">
-						<img src="images/student.png" alt="IMG">
-						<span class="login100-form-title">
-							<br>
-							<font style="font-size: 18px;">ระบบลงทะเบียนใช้งานระบบอินเตอร์เน็ต</font><br>
-							<font style="font-size: 18px;">โรงเรียนเมืองยมวิทยาคาร</font><br>
-						</span>
+						<center>
+							<img src="images/student.png" alt="IMG" width="316px">
+							<span class="login100-form-title">
+								<br>
+								<font style="font-size: 18px;">ระบบลงทะเบียนใช้งานระบบอินเตอร์เน็ต</font><br>
+								<font style="font-size: 18px;">โรงเรียนเมืองยมวิทยาคาร</font><br>
+							</span>
+						</center>
 					</div>
 				</div>
 
-				<form action="./PHPFunction/Register.php" method="POST" class="login100-form validate-form">
-
+				<form action="./PHPFunction/Register.php" method="POST" class="login100-form">
 					<span class="login100-form-title">
 						ระบบลงทะเบียน
 					</span>
-					<div id="Form_1" class="vertical-center-form">
+					
+					<div id="Form_1" class="vertical-center-form" style="padding-top: 15%;">
 						<div class="wrap-input100">
 							<div class="row">
 								<div class="input-field col s6">
@@ -54,7 +58,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="input-field col s12">
+								<div class="input-field col s6">
 									<input name="Identify" maxlength="13" id="Identify" type="text" class="validate"
 										oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
 										onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
@@ -78,7 +82,6 @@
 
 
 					<div id="Form_2" style="display: none;">
-
 						<div class="row">
 							<div class="input-field col s12">
 								<input name="Email" id="Email" type="email" class="validate">
@@ -88,14 +91,15 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<select id="Gender" name="Gender">
-									<option value="Female">ชาย</option>
-									<option value="Male">หญิง</option>
+									<option value="male">ชาย</option>
+									<option value="female">หญิง</option>
 								</select>
 								<label>เพศ</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s4">
+
 								<select name="BirthDays" id="BirthDays">
 									<option value="" disabled selected>วัน</option>
 								</select>
@@ -151,6 +155,9 @@
 		</div>
 	</div>
 
+	<div style="display: none;">
+		<input type="text" id="StudentID" value="">
+	</div>
 
 	<div id="MismatchTable" style="display: none;">
 		<table border="1" width="50%" style="border: 0%;">
@@ -247,6 +254,16 @@
 			})
 		};
 
+		function registered() {
+			Swal.fire({
+				icon: 'error',
+				title: (document.getElementById('Identify').value),
+				text: 'รหัสประจำตัวนี้ถูกลงทะเบียนไว้เรียบร้อยแล้ว',
+				footer: 'กรุณาตรวจสอบหมายเลขของคุณหรือติดต่อผู้ดูแลระบบ',
+				confirmButtonText: 'เข้าใจแล้ว',
+			})
+		};
+
 		function NotFoundData() {
 			Swal.fire({
 				icon: 'error',
@@ -301,8 +318,9 @@
 			BirthMonths = document.getElementById('BirthMonths').value;
 			BirthYears = document.getElementById('BirthYears').value;
 			AcademicYear = document.getElementById('AcademicYear').value;
-			Degree = document.getElementById('Gender').value;
+			Degree = document.getElementById('Degree').value;
 			Room = document.getElementById('Room').value;
+			StudentID = document.getElementById('StudentID').value;
 
 
 			if (!Identify || !Firstname || !Lastname || !Email || !Gender || !BirthDays || !BirthMonths || !BirthYears || !
@@ -316,7 +334,7 @@
 
 			AjaxOBJ = $.ajax({
 				type: "POST",
-				url: "./PHPFunction/QueryProfileIdentify.php",
+				url: "./PHPFunction/doRegistion.php",
 				error: function (ts) {
 					alert(ts.responseText);
 					ToggleLoadingBar(false);
@@ -325,6 +343,7 @@
 				dataType: "json",
 				data: {
 					Identify: Identify,
+					StudentID: StudentID,
 					Firstname: Firstname,
 					Lastname: Lastname,
 					Email: Email,
@@ -333,15 +352,17 @@
 					BirthMonths: BirthMonths,
 					BirthYears: BirthYears,
 					AcademicYear: AcademicYear,
-					Degree: Gender,
+					Degree: Degree,
 					Room: Room
 				}
 			});
 
 			AjaxOBJ.done(function (ResponsedMsg) {
+				alert(ResponsedMsg);
 			});
 
 			AjaxOBJ.fail(function () {
+				alert(ResponsedMsg);
 			});
 
 
@@ -380,15 +401,31 @@
 			});
 
 			AjaxOBJ.done(function (ResponsedMsg) {
-				if (ResponsedMsg['Status'] == 'success') {
-					ToggleLoadingBar(false);
-					StartChangeContent("Form_1", "Form_2");
-				} else if (ResponsedMsg['Status'] == 'mismatch') {
-					DataMismatch(ResponsedMsg['Identify'], ResponsedMsg['Firstname'], ResponsedMsg['Lastname']);
-				} else if (ResponsedMsg['Status'] == 'error') {
-					NotFoundData();
-					ToggleLoadingBar(false);
-					ToggleForm_1(true);
+				if (ResponsedMsg) {
+					document.getElementById('StudentID').value = ResponsedMsg['StudentID'];
+					switch (ResponsedMsg['Status']) {
+						case "success":
+							ToggleLoadingBar(false);
+							StartChangeContent("Form_1", "Form_2");
+							break;
+						case 'mismatch':
+							DataMismatch(ResponsedMsg['Identify'], ResponsedMsg['Firstname'], ResponsedMsg[
+								'Lastname']);
+							break;
+						case 'notFound':
+							NotFoundData();
+							ToggleLoadingBar(false);
+							ToggleForm_1(true);
+							break;
+						case 'registered':
+							registered();
+							ToggleLoadingBar(false);
+							ToggleForm_1(true);
+							break;
+
+					}
+				} else {
+					alert("Error!");
 				}
 			});
 
@@ -435,6 +472,7 @@
 			coverTrigger: false
 		});
 
+
 		function AddIntoSelect(SelectID, Value, Text) {
 			if (!(!SelectID || !Value || !Text)) {
 				var x = document.getElementById(SelectID);
@@ -479,6 +517,8 @@
 
 			}
 		}
+		// Debug
+		//StartChangeContent("Form_1", "Form_2");
 	</script>
 	<!--===============================================================================================-->
 	<!--JavaScript at end of body for optimized loading-->
