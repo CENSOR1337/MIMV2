@@ -8,17 +8,19 @@ if (isset($_POST['Identify'])) {
     $Firstname = mysqli_real_escape_string($conn, $_POST['Firstname']);
     $Lastname = mysqli_real_escape_string($conn, $_POST['Lastname']);
 
-    $sql = "SELECT * FROM `accessibleprofiles` WHERE `IndentifyID` LIKE '$Identify'";
+    $sql = "SELECT * FROM `AccessibleProfiles` WHERE `IndentifyID` LIKE '$Identify'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             if ($Firstname == $row['Firstname'] && $Lastname == $row['Lastname']) {
                 $ReturnValue = array("Status" => 'success',
+                    "Identify" => $Identify,
                     "Firstname" => $row['Firstname'],
                     "Lastname" => $row['Lastname']);
             } else {
                 $ReturnValue = array("Status" => 'mismatch',
+                    "Identify" => $Identify,
                     "Firstname" => $row['Firstname'],
                     "Lastname" => $row['Lastname']);
             }

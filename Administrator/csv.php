@@ -24,7 +24,7 @@ function InsertProfileIntoDB($ProfileArray)
 
 
 
-    $sql = "INSERT INTO `accessibleprofiles` (`IndentifyID`, `Firstname`, `Lastname`) 
+    $sql = "INSERT INTO `AccessibleProfiles` (`IndentifyID`, `Firstname`, `Lastname`) 
     VALUES ($InsertData)";
     /*
     $sql = "INSERT INTO `profiles` (`IndentifyID`, `StudentID`, `Name`, `Lastname`) VALUES ('1559500032442', '1695', 'ณัฐพล', 'อุดอุ่น'),
