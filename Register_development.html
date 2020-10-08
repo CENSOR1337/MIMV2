@@ -44,7 +44,7 @@
 					<span class="login100-form-title">
 						ระบบลงทะเบียน
 					</span>
-					
+
 					<div id="Form_1" class="vertical-center-form" style="padding-top: 15%;">
 						<div class="wrap-input100">
 							<div class="row">
@@ -73,7 +73,7 @@
 											<div class="indeterminate"></div>
 										</div>
 										<button id="CheckIDButton" class="btn waves-effect waves-light deep-purple"
-											type="button" onclick="QueryIdentifyID();">ตรวจสอบสิทธิ์</button>
+											type="button" onclick="QueryIdentifyID();">เริ่มลงทะเบียน</button>
 									</center>
 								</div>
 							</div>
@@ -91,6 +91,7 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<select id="Gender" name="Gender">
+									<option selected  disabled>เพศ</option>
 									<option value="male">ชาย</option>
 									<option value="female">หญิง</option>
 								</select>
@@ -186,6 +187,20 @@
 	<script>
 		// SweetAlert 2
 
+		function registionSuccess(firstname, lastname) {
+			Swal.fire({
+				icon: 'success',
+				title: firstname + ' ' + lastname,
+				text: 'ได้ทำการลงทะเบียนไปเรียบร้อยแล้ว',
+				footer: 'หากต้องการแก้ไขข้อมูลกรุณาเข้าสู่ระบบ',
+				confirmButtonText: 'เข้าใจแล้ว'
+			}).then((result) => {
+				StartChangeContent('Form_2', 'Form_1');
+				ToggleLoadingBar(false);
+				ToggleForm_1(true);
+			})
+		};
+
 		function DataMismatch(Identify, Firstname, Lastname) {
 			FormIdentify = document.getElementById('Identify').value;
 			FormFirstname = document.getElementById('Firstname').value;
@@ -256,13 +271,30 @@
 
 		function registered() {
 			Swal.fire({
-				icon: 'error',
+				icon: 'info',
 				title: (document.getElementById('Identify').value),
 				text: 'รหัสประจำตัวนี้ถูกลงทะเบียนไว้เรียบร้อยแล้ว',
-				footer: 'กรุณาตรวจสอบหมายเลขของคุณหรือติดต่อผู้ดูแลระบบ',
+				footer: 'หากมีปัญหากรุณาติดต่อผู้ดูแล',
 				confirmButtonText: 'เข้าใจแล้ว',
 			})
 		};
+
+		function ErrorAjax() {
+			Swal.fire(
+				'เกิดข้อผิดพลาด',
+				'เกิดข้อผิดพลาดที่ไม่คาดคิด',
+				'error'
+			)
+		};
+
+		function NotVerified(name, lastname) {
+			Swal.fire(
+				'ยังไม่ได้รับการยืนยัน',
+				'คุณ ' + name + "  " + lastname + ' ยังไม่สามารถเข้าระบบได้',
+				'error'
+			)
+		}
+
 
 		function NotFoundData() {
 			Swal.fire({
@@ -358,11 +390,22 @@
 			});
 
 			AjaxOBJ.done(function (ResponsedMsg) {
-				alert(ResponsedMsg);
+				switch (ResponsedMsg['Status']) {
+					case "success":
+						registionSuccess(Firstname, Lastname);
+						StartChangeContent("Form_1", "Form_2");
+						ToggleForm_1(true);
+						break;
+					case 'registered':
+						registered(Firstname, Lastname);
+						ToggleLoadingBar(false);
+						ToggleForm_1(true);
+						break;
+				}
 			});
 
 			AjaxOBJ.fail(function () {
-				alert(ResponsedMsg);
+				alert(ResponsedMsg[0]);
 			});
 
 
@@ -497,7 +540,7 @@
 		}
 
 		for (let i = 0; i < 6; i++) {
-			AddIntoSelect("Degree", i + 1, ("มัธยมศึกษาปีที่ " + (i + 1)));
+			AddIntoSelect("Degree", i + 1, ("มัธยมปีที่ " + (i + 1)));
 		}
 
 
