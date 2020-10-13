@@ -77,12 +77,12 @@
           <ul id="profile-dropdown" class="dropdown-content">
             <li>
               <a href="#" class="grey-text text-darken-1">
-                <i class="material-icons">face</i> โปรไฟล์</a>
+                <i class="material-icons">account_box</i> โปรไฟล์</a>
             </li>
             <li class="divider"></li>
             <li>
               <a href="#" class="grey-text text-darken-1">
-                <i class="material-icons">keyboard_tab</i> ออกจากระบบ</a>
+                <i class="material-icons">exit_to_app</i> ออกจากระบบ</a>
             </li>
           </ul>
         </div>
@@ -105,7 +105,7 @@
                 <img src="images/avatar/avatar-7.png" alt="" class="circle responsive-img valign profile-image cyan">
               </div>
               <div class="col col s8 m8 l8">
-                <a class="white-text profile-btn" data-activates="profile-dropdown-nav">กษินนท์ วัดบุญเลี้ยง<i
+                <a class="white-text profile-btn">กษินนท์ วัดบุญเลี้ยง<i
                     class="mdi-navigation-arrow-drop-down right"></i></a>
                 <p class="user-roal">ผู้ดูแลระบบ</p>
               </div>
@@ -225,7 +225,9 @@
               </div>
             </div>
           </div>
-          <div id="ProfilesInfos">
+
+          <!-- Profile info table -->
+          <div id="ProfilesInfoTable">
             <div class="section">
               <div class="col s12">
                 <div class="row">
@@ -235,49 +237,93 @@
                         <span class="table-title">ข้อมูลโปรไฟล์</span>
 
                         <div class="actions">
-                          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
-                              class="material-icons">search</i></a>
+                          <div class="row">
+                            <div class="input-field col">
+                              <center>
+                                <a class="waves-effect waves-light btn"><i
+                                    class="material-icons left white-text">add</i>เพิ่มข้อมูล</a>
+                              </center>
+                              </center>
+                            </div>
+                            <div class="input-field col">
+                              <center>
+                                <a id="button" class="profile-button waves-effect waves-light btn"><i
+                                    class="material-icons left white-text">delete</i>ลบข้อมูลที่เลือก</a>
+                              </center>
+                            </div>
+                            <div class="input-field col">
+                              <center>
+                                <a class="search-toggle waves-effect btn-flat nopadding"><i
+                                    class="material-icons left">search</i>ค้นหาข้อมูล</a>
+                              </center>
+                            </div>
+
+                          </div>
+
                         </div>
                       </div>
-                      <table class="table-responsive" id="datatable" style="padding-top: 25px;">
-                        <!--<thead>
-                          
-                          <tr>
-                            <th style="text-align: left; font-weight: bold;">รหัสประจำตัวประชาชน</th>
-                            <th style="text-align: left; font-weight: bold;">ชื่อ</th>
-                            <th style="text-align: left; font-weight: bold;">นามสกุล</th>
-                            <th style="text-align: left; font-weight: bold;">ตำแหน่ง</th>
-                            <th style="text-align: left; font-weight: bold;">รหัสประจำตัวนักเรียน</th>
-                            <th style="text-align: left; font-weight: bold;">สถานะ</th>
-                            <th style="text-align: right; font-weight: bold;">การกระทำ</th>
-                          </tr>
-                          
-                        </thead>-->
+                      <table class="display" id="Datatable_0" style="padding-top: 25px;">
+                        <thead>
+                          <th style="width: 200px;" class="center">สถานะ</th>
+                          <th class="">รหัสประจำตัวประชาชน</th>
+                          <th class="">ชื่อ</th>
+                          <th class="">นามสกุล</th>
+                          <th class="">บทบาท</th>
+                          <th class="">รหัสประจำตัวนักเรียน</th>
+                          <th style="width: 75px;" class="center">แก้ไข</th>
+                          <th style="width: 75px;" class="center">ลบ</th>
+                        </thead>
                         <tbody>
-
-                          <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td>
-                              <div>
-                                <a href="#"><i style="font-size: 25px;" class="material-icons">edit</i></a>
-                                <a href="#"><i style="font-size: 25px;" class="material-icons">delete</i></a>
-                              </div>
-                            </td>
-                          </tr>
-
                         </tbody>
                       </table>
+                      <br>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- END of Profile info table -->
+
+          <!-- Profile Register table -->
+          <div id="ProfilesInfoTable" style="display: none;">
+            <div class="section">
+              <div class="col s12">
+                <div class="row">
+                  <div id="admin" class="col s12">
+                    <div class="card material-table">
+                      <div class="table-header">
+                        <span class="table-title">ข้อมูลการลงทะเบียน</span>
+                        <div class="actions">
+                          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                              class="material-icons">search</i></a>
+                        </div>
+                      </div>
+                      <table class="display" id="Datatable_1" style="padding-top: 25px;">
+                        <thead>
+                          <th>รหัสประจำตัวประชาชน</th>
+                          <th>ประเภทผู้ใช้</th>
+                          <th>ชื่อ</th>
+                          <th>นามสกุล</th>
+                          <th>เพศ</th>
+                          <th>วันเกิด</th>
+                          <th>ชั้นปี</th>
+                          <th>ห้อง</th>
+                          <th>ปีการศึกษา</th>
+                          <th>สถานะ</th>
+                          <th>การกระทำ</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END of Register info table -->
       </div>
     </div>
   </div>
@@ -312,52 +358,6 @@
   </footer>
 
 
-  <script>
-    function UpdateDataTable(TableObj) {
-
-      table = document.getElementById("datatable");
-      header = table.createTHead();
-      headerRow = header.insertRow(0);
-
-
-      for (let index = 0; index < TableObj['header'].length; index++) {
-        console.log(TableObj['header'][index]);
-      
-        cell = headerRow.insertCell(index);
-        cell.innerHTML = TableObj['header'][index];
-      }
-      /*
-            tableBody = table.createTBody();
-            tableBodyRow = tableBody.insertRow(0);
-
-            
-
-                  for (let index = 0; index < TableObj['header'].length; index++) {
-
-                    for (let index = 0; index < TableObj['header'].length; index++) {
-                      console.log(TableObj['rows'][index]);
-                      row = table.insertRow(1);
-                      cell1 = row.insertCell(0);
-                      cell2 = row.insertCell(1);
-                      cell1.innerHTML = "NEW CELL1";
-                      cell2.innerHTML = "NEW CELL2";
-
-                    }
-                  }
-                  */
-    }
-
-
-    dict = {
-      header: ['รหัสประจำตัวประชาชน', 'ชื่อ', 'นามสกุล', 'ตำแหน่ง', 'รหัสประจำตัวนักเรียน', 'สถานะ', 'การกระทำ'],
-      rows: [
-        ['1111111111111', 'เมธี', 'ตนะทิพย์', 'นักเรียน', '01470', 'ลบ แก้ไข']
-      ]
-    };
-
-    UpdateDataTable(dict);
-  </script>
-
   <!-- END FOOTER -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -377,9 +377,90 @@
   <!--custom-script.js - Add your own theme custom JS-->
   <script type="text/javascript" src="js/custom-script.js"></script>
 
+  <script>
+    // Action scirpt
+
+    function doDeleteProfile(ID) {
+      alert(ID);
+    }
+
+    function doEditProfile(ID) {
+      alert(ID);
+    }
+  </script>
 
   <script>
+    function QueryProfileInfo() {
+      AjaxOBJ = $.ajax({
+        type: "POST",
+        url: "../PHPFunction/Administrator/queryProfileInfos.php",
+        error: function (ts) {
+          alert(ts.responseText);
+        }, // or console.log(ts.responseText)
+        dataType: "json",
+        data: {
+          AdminID: "WOW"
+        }
+      });
 
+      AjaxOBJ.done(function (ResponsedMsg) {
+        if (ResponsedMsg) {
+
+          Verified = '<center><span class="chip green lighten-5">' +
+            '<span class="green-text">ยืนยันเรียบร้อยแล้ว</span>' +
+            '</span></center>';
+          NotVerified = '<center><span class="chip red lighten-5">' +
+            '<span class="red-text">ยังไม่ได้รับการยืนยัน</span>' +
+            '</span></center>';
+
+          row = new Array();
+          console.log(ResponsedMsg);
+
+          ResponsedMsg.forEach(element => {
+            Status = (element['RegisterStatus'] ? Verified : NotVerified);
+
+            Edit = '<center><a href="#" onclick="doEditProfile(' + element['IndentifyID'] +
+              ');"><i class="material-icons cyan-text">edit</i></a></center>';
+            Delete =
+              '<center><a href="#" onclick="doDeleteProfile(' + element['IndentifyID'] +
+              ');"><i class="material-icons red-text">delete</i></a></center>';
+
+
+
+            Action = '<div>' +
+              '<a onclick="alert();">' +
+              '<i class="material-icons">remove_red_eye</i>' +
+              '</a>' +
+              '<a onclick="alert();">' +
+              '<i class="material-icons">edit</i>' +
+              '</a>' +
+              '</div>';
+            row.push([Status, element['IndentifyID'], element['Firstname'], element['Lastname'], (element[
+                'Status'] == 'student' ? "นักเรียน" : "บุคลากร"),
+              element['StudentID'], Edit, Delete
+            ]);
+          });
+
+          AddIntoTatable("Datatable_0", row);
+
+        } else {}
+      });
+      AjaxOBJ.fail(function () {
+        alert('failed');
+      });
+
+    };
+
+
+
+    function AddIntoTatable(TableID, Obj) {
+      var t = $('#' + TableID).DataTable();
+
+
+      Obj.forEach(element => {
+        t.row.add(element).draw(false);
+      });
+    }
   </script>
 
   <script>
@@ -388,8 +469,6 @@
       // document.getElementById(Hide).style.display = 'none';
 
     }
-
-    changeContent('dashboardContent', '');
 
     function UpdateDashboard(DataSet) {
 
@@ -400,7 +479,6 @@
     }
 
     function QueryAdministratoInfo() {
-
       AjaxOBJ = $.ajax({
         type: "POST",
         url: "../PHPFunction/Administrator/queryAdminInfos.php",
@@ -421,7 +499,6 @@
           alert("False!");
         }
       });
-
       AjaxOBJ.fail(function () {
         alert("Failed");
       });
@@ -429,15 +506,23 @@
     };
   </script>
 
-
-
-
   <script>
-    QueryAdministratoInfo();
+    $(document).ready(function () {
+      QueryAdministratoInfo();
+      QueryProfileInfo();
+      var table = $('#Datatable_0').DataTable();
+
+      $('#Datatable_0 tbody').on('click', 'tr', function () {
+        $(this).toggleClass('selected');
+      });
+
+      $('#button').click(function () {
+        alert(table.rows('.selected').data().length + ' row(s) selected');
+        var data = table.rows('.selected').data().length;
+        console.log(data);
+      });
+    });
   </script>
-
-
-
 
 </body>
 

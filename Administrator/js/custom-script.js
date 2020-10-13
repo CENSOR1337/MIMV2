@@ -185,7 +185,8 @@
 
 
 $(document).ready(function () {
-	$('#datatable').dataTable({
+	$('table.display').dataTable({
+		retrieve: true,
 		bAutoWidth: false,
 		language: {
 			"sLengthMenu": '<span>&nbsp; &nbsp;จำนวนต่อหน้า:</span>' +
@@ -199,7 +200,7 @@ $(document).ready(function () {
 				'</select></div>',
 			"decimal": "",
 			"sSearchPlaceholder": "ค้นหาในตาราง",
-			"emptyTable": "ไม่พบข้อมูลในตาราง",
+			"emptyTable": "<center><a><i class='material-icons'>search_off</i> ไม่พบข้อมูล</a></center>",
 			"info": "แสดงรายชื่อทั้งหมด _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายชื่อ",
 			"infoEmpty": "แสดงรายชื่อทั้งหมด 0 ถึง 0 จากทั้งหมด 0 รายชื่อ",
 			"infoFiltered": "(คัดกรองจากทั้งหมดข้อมูลทั้งหมด _MAX_ รายชื่อ)",
@@ -208,7 +209,7 @@ $(document).ready(function () {
 			"loadingRecords": "กำลังโหลด...",
 			"processing": "กำลังประมวลผล...",
 			"search": "",
-			"zeroRecords": "ไม่พอข้อมูล",
+			"zeroRecords": "<center><a><i class='material-icons'>search_off</i> ไม่พบข้อมูล</a></center>",
 			"paginate": {
 				"first": "แรก",
 				"last": "สุดท้าย",
@@ -230,7 +231,7 @@ $(document).ready(function () {
 					$(win.document.body)
 						.css('font-size', '10pt')
 						.prepend(
-							'<h4>Title Test</h4>',
+							'<h4>ระบบอินเตอร์เน็ตโรงเรียนเมืองยมวิทยาคาร</h4>',
 							//  Background table picture in print version is here
 						);
 

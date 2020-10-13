@@ -21,12 +21,9 @@ function InsertProfileIntoDB($ProfileArray)
         return implode("', '", $entry);
     }, $ProfileArray)) . "'";
 
-
-
-
-    $sql = "INSERT INTO `AccessibleProfiles` (`IndentifyID`, `StudentID`, `Firstname`, `Lastname`) 
+    $sql = "INSERT INTO `AccessibleProfiles` (`IndentifyID`, `StudentID`, `Firstname`, `Lastname`)
     VALUES ($InsertData)";
-    
+
     if ($conn->query($sql) === true) {
         echo "New record created successfully";
     } else {
@@ -54,8 +51,8 @@ if ($_POST) {
             $CsvData = fgetcsv($CsvHandle, 1000, ",");
 
             for ($i = 0; $i < count($TargetString); $i++) {
-                if (array_search($TargetString[$i], $CsvData)) {
-                    array_push($SortingIndex, array_search($TargetString[$i], $CsvData));
+                if ((array_search($TargetString[$i], $CsvData)) !== false) {
+                    array_push($SortingIndex, (array_search($TargetString[$i], $CsvData)) !== false);
                 }
             }
 
