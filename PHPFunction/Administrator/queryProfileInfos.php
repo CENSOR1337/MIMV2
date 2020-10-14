@@ -35,14 +35,15 @@ if ($resultStatus->num_rows > 0) {
 }
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        array_push($Return, array("IndentifyID" => $row['IndentifyID'],
-            "Firstname" => $row['Firstname'],
-            "Lastname" => $row['Lastname'],
-            "Status" => $row['Status'],
-            "StudentID" => $row['StudentID'],
-            "RegisterStatus" => ((array_search($row['IndentifyID'], $resultStatusArray) !== false) ? true : false),
-        ));
-
+        if (($row['IndentifyID'])) {
+            array_push($Return, array("IndentifyID" => $row['IndentifyID'],
+                "Firstname" => $row['Firstname'],
+                "Lastname" => $row['Lastname'],
+                "Status" => $row['Status'],
+                "StudentID" => $row['StudentID'],
+                "RegisterStatus" => ((array_search($row['IndentifyID'], $resultStatusArray) !== false) ? true : false),
+            ));
+        }
     }
     print json_encode($Return);
 } else {

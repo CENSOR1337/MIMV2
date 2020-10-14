@@ -189,6 +189,14 @@ $(document).ready(function () {
 		retrieve: true,
 		bAutoWidth: false,
 		language: {
+			buttons: {
+				copyTitle: 'คัดลอกข้อมูลแล้ว',
+				copySuccess: {
+					1: "คัดลอกข้อมูลหนึ่งแถวแล้ว",
+					_: "คัดลอกข้อมูลเป็นจำนวนทั้งหมด %d แถวแล้ว"
+				},
+			},
+
 			"sLengthMenu": '<span>&nbsp; &nbsp;จำนวนต่อหน้า:</span>' +
 				'<select class="browser-default">' +
 				'<option value="10">10</option>' +
@@ -221,7 +229,10 @@ $(document).ready(function () {
 				"sortDescending": ": activate to sort column descending"
 			}
 		},
+
 		buttons: [{
+				copyTitle: 'Data copied',
+				copyKeys: 'Use your keyboard or menu to select the copy command',
 				text: '<span style="color:#4d4d4d; margin-right:15px">พิมพ์<span>',
 				extend: 'print',
 				className: '',

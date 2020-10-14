@@ -220,9 +220,6 @@ div.material-table table th.sorting_desc:after {
   content: "arrow_forward";
 }
 
-div.material-table table tbody tr:hover {
-  background-color: #EEE;
-}
 
 div.material-table table th:first-child,
 div.material-table table td:first-child {
