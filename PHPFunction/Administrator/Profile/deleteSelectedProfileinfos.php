@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ob_start();
 ob_end_clean();
 
@@ -10,7 +10,7 @@ print json_encode('Please Login');
 return;
 }
  */
-require_once '../../config/connects.php';
+require_once '../../../config/connects.php';
 
 if (isset($_POST['toDeleteArray'])) {
 
@@ -18,7 +18,7 @@ if (isset($_POST['toDeleteArray'])) {
 
     $toDeleteStringArray = "('" . implode("', '", $toDelete) . "')";
 
-    $sql = "DELETE FROM `accessibleprofiles` WHERE `accessibleprofiles`.`IndentifyID` IN $toDeleteStringArray;";
+    $sql = "DELETE FROM `AccessibleProfiles` WHERE `AccessibleProfiles`.`IndentifyID` IN $toDeleteStringArray;";
 
     if ($conn->query($sql) === true) {
         print json_encode(true);

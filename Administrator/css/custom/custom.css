@@ -262,3 +262,7 @@ tr td {
   max-width: 300px;
   white-space: normal;
 }
+
+.swal-wide {
+  width: 800px !important;
+}

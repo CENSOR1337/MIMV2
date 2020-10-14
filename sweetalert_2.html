@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    var wow = ['event', '1', '2', '3', '4', '5', '6']
+
+    function parameterAppend(Array) {
+        result = '(';
+        for (let index = 0; index < Array.length; index++) {
+            const element = Array[index];
+            if (element == 'event') {
+                result += element + ',';
+            } else {
+                if (index == (Array.length) - 1) {
+                    result += "'" + element + "'";
+                } else {
+                    result += "'" + element + "',";
+                }
+            }
+        }
+        result += ')';
+        return result;
+    }
+
+    //console.log(parameterAppend(wow));
+    var months_th = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
+        "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
+    ];
+
+    function Months(Array) {
+        result = '{';
+        for (let index = 0; index < Array.length; index++) {
+            const element = Array[index];
+
+        
+                result +=  "'" + (parseInt(index)+1) + "'" +':' + "'" + element + "',";
+            
+
+        }
+        result += '}';
+        return result;
+    }
+    console.log(Months(months_th));
+</script>
+
+<body>
+
+</body>
+
+</html>

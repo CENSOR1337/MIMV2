@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./css/materialize.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/font.css">
+
+</head>
+
+<style>
+    .swal-wide {
+        width: 800px !important;
+    }
+</style>
+
+<body>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2'></script>
+
+    <!--materialize js-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!--scrollbar-->
+
+    <div>
+        <div class="container">
+            <table class="highlight">
+                <table>
+                    <thead>
+                        <tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="1" class="right-align"><b>เลขประจำตัวประชาชน : </b></td>
+                            <td colspan="3">111111111111</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="right-align"><b>เลขประจำตัวนักเรียน : </b></td>
+                            <td colspan="3">1470</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="right-align"><b>ชื่อ - สกุล : </b></td>
+                            <td colspan="3">เมธี ตนะทิพย์</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="right-align"><b>วันเกิด : </b></td>
+                            <td colspan="3">24 มิถุนายน 2543</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="right-align"><b>เมล : </b></td>
+                            <td colspan="3">censor31337@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td class="right-align"><b>เพศ : </b></td>
+                            <td>ชาย</td>
+                            <td class="right-left"><b>ปีการศึกษา : </b></td>
+                            <td>2563</td>
+                        </tr>
+                        <tr>
+                            <td class="right-align"><b>ประเภทผู้ใช้ : </b></td>
+                            <td>บุคลากร</td>
+                            <td class="right-left"><b>สถานะ : </b></td>
+                            <td>ระงับใช้งาน</td>
+                        </tr>
+                        <tr>
+                            <td class="right-align"><b>ห้องที่ : </b></td>
+                            <td>1</td>
+                            <td class="right-left"><b>มัธยมปีที่ : </b></td>
+                            <td>2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script>
+    function ViewRegisterInfo(IndentifyID, StudentID, Firstname, Lastname, BirthDate, Email, Gender, AcademicYear, Role,
+        Permission, Degree, Room) {
+
+        if (!IndentifyID) {
+            return;
+        }
+
+        months_th = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน",
+            "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
+        ];
+
+        BirthDate = BirthDate.split('-');
+        BirthDate = parseInt(BirthDate[2]) + " " + months_th[parseInt(BirthDate[1])] + " " + (parseInt(BirthDate[0]) +
+            543);
+
+        Gender = (Gender == "male" ? 'ชาย' : 'หญิง');
+
+        switch (Role) {
+            case 'personnel':
+                Role = 'บุคลากร';
+                break;
+
+            case 'student':
+                Role = 'นักเรียน';
+                break;
+        }
+
+        switch (Permission) {
+            case 'pending':
+                Permission = 'รอการยืนยัน';
+                break;
+
+            case 'verified':
+                Permission = 'ยืนยันเรียบร้อยแล้ว';
+                break;
+
+            case 'suspended':
+                Permission = 'ระงับการใช้งาน';
+                break;
+        }
+
+        Swal.fire({
+            title: 'ข้อมูลการลงทะเบียน',
+            html: '<div>' +
+                '    <div class="container">' +
+                '        <table class="highlight">' +
+                '            <table>' +
+                '                <thead>' +
+                '                    <tr>' +
+                '                    </tr>' +
+                '                </thead>' +
+                '                <tbody>' +
+                '                    <tr>' +
+                '                        <td colspan="1" class="right-align"><b>เลขประจำตัวประชาชน : </b></td>' +
+                '                        <td colspan="3">' + IndentifyID + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td colspan="1" class="right-align"><b>เลขประจำตัวนักเรียน : </b></td>' +
+                '                        <td colspan="3">' + StudentID + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td colspan="1" class="right-align"><b>ชื่อ - สกุล : </b></td>' +
+                '                        <td colspan="3">' + Firstname + ' ' + Lastname + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td colspan="1" class="right-align"><b>วันเกิด : </b></td>' +
+                '                        <td colspan="3">' + BirthDate + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td colspan="1" class="right-align"><b>อีเมล : </b></td>' +
+                '                        <td colspan="3">' + Email + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td class="right-align"><b>เพศ : </b></td>' +
+                '                        <td>' + Gender + '</td>' +
+                '                        <td class="right-left"><b>ปีการศึกษา : </b></td>' +
+                '                        <td>' + AcademicYear + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td class="right-align"><b>ประเภทผู้ใช้ : </b></td>' +
+                '                        <td>' + Role + '</td>' +
+                '                        <td class="right-left"><b>สถานะ : </b></td>' +
+                '                        <td>' + Permission + '</td>' +
+                '                    </tr>' +
+                '                    <tr>' +
+                '                        <td class="right-align"><b>มัธยมปีที่ : </b></td>' +
+                '                        <td>' + Degree + '</td>' +
+                '                        <td class="right-left"><b>ห้องที่ : </b></td>' +
+                '                        <td>' + Room + '</td>' +
+                '                    </tr>' +
+                '                </tbody>' +
+                '            </table>' +
+                '        </table>' +
+                '    </div>' +
+                '</div>',
+            customClass: 'swal-wide',
+        })
+    };
+
+    ViewRegisterInfo('111111111111', '1470', 'เมธี', 'ตนะทิพย์', '2000-06-24', 'censor31337@gmail.com', 'male', '2563',
+        'student', 'pending', '1', '2');
+</script>
+
+</html>

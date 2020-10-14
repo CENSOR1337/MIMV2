@@ -1,10 +1,6 @@
 <?php
-$ServerName = "localhost";
-$ServerUsername = "root";
+$ServerName = "";
+$ServerUsername = "";
 $ServerPassword = "";
-$ServerDatabaseName = "MIMV2";
-
-
-// SystemControl
-$OpenForRegister = true;
-$NeedToBeVerify = false;
+$ServerDatabaseName = "";
+$Debug = false;

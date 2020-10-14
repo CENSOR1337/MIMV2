@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ob_start();
 ob_end_clean();
 
@@ -10,7 +10,7 @@ print json_encode('Please Login');
 return;
 }
  */
-require_once '../../config/connects.php';
+require_once '../../../config/connects.php';
 
 if (!($Debug)) {
     if (!(isset($_SESSION['AdministratoAuth']))) {

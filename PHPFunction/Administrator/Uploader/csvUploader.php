@@ -4,10 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../../../css/font.css">
 </head>
 <body>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function uploadDone(){
+
+        Swal.fire({
+        title: 'สำเร็จ',
+        icon: 'success',
+        showDenyButton: false,
+        text : 'การอัปโหลดข้อมูลเสร็จสิ้น',
+        showCancelButton: false,
+        confirmButtonText: `ตกลง`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            window.location = "../../../Administrator/";
+        } else {
+            window.location = "../../../Administrator/";
+        }
+        })
+    }
+
+    function uploadFailed(){
+
+        Swal.fire({
+        title: 'ผิดพลาด',
+        icon: 'error',
+        showDenyButton: false,
+        text : 'การอัปโหลดผิดพลาดกรุณาลองใหม่อีกครั้ง',
+        showCancelButton: false,
+        confirmButtonText: `ตกลง`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            window.location = "../../../Administrator/";
+        } else{
+            window.location = "../../../Administrator/";
+        }
+        })
+    };
+
+
+</script>
+
 </html>
 
 <?php
@@ -15,7 +59,7 @@
 function InsertProfileIntoDB($ProfileArray)
 {
 
-    require_once "../config/connects.php";
+    require_once "../../../config/connects.php";
 
     $InsertData = "'" . implode("'),('", array_map(function ($entry) {
         return implode("', '", $entry);
@@ -25,19 +69,25 @@ function InsertProfileIntoDB($ProfileArray)
     VALUES ($InsertData)";
 
     if ($conn->query($sql) === true) {
-        echo "New record created successfully";
+        echo '<script type="text/javascript">';
+        echo 'uploadDone();';
+        echo '</script>';
+
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo '<script type="text/javascript">';
+        echo 'uploadFailed();';
+        echo '</script>';
+
     }
 
 }
 
 $AccpetedExt = array("csv");
-if ($_POST) {
-    if (isset($_FILES['upload'])) {
+if (isset($_FILES['csvUpload'])) {
+    if (isset($_FILES['csvUpload'])) {
 
-        $File = $_FILES['upload']['name'];
-        $TempFile = $_FILES['upload']['tmp_name'];
+        $File = $_FILES['csvUpload']['name'];
+        $TempFile = $_FILES['csvUpload']['tmp_name'];
         $ext = explode(".", $File);
         $ext = $ext[count($ext) - 1];
     }

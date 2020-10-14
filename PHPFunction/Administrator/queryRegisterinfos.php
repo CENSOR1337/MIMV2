@@ -19,32 +19,33 @@ if (!($Debug)) {
     }
 }
 
-$sql = "SELECT * FROM `AccessibleProfiles`";
-$sqlStatus = "SELECT * FROM `AccessibleProfiles` INNER JOIN `Profiles` ON `AccessibleProfiles`.`IndentifyID` LIKE `Profiles`.`IndentifyID`";
+$sql = "SELECT * FROM `Profiles`";
 
 $result = $conn->query($sql);
-$resultStatus = $conn->query($sqlStatus);
 
-$resultStatusArray = array();
 $Return = array();
 
-if ($resultStatus->num_rows > 0) {
-    while ($row = $resultStatus->fetch_assoc()) {
-        array_push($resultStatusArray, $row['IndentifyID']);
-    }
-}
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         if (($row['IndentifyID'])) {
-            array_push($Return, array("IndentifyID" => $row['IndentifyID'],
+            array_push($Return, array(
+                "IndentifyID" => $row['IndentifyID'],
+                "StudentID" => $row['StudentID'],
                 "Firstname" => $row['Firstname'],
                 "Lastname" => $row['Lastname'],
+                "Gender" => $row['Gender'],
+                "BirthDate" => $row['BirthDate'],
+                "Degree" => $row['Degree'],
+                "Room" => $row['Room'],
                 "Status" => $row['Status'],
-                "StudentID" => $row['StudentID'],
-                "RegisterStatus" => ((array_search($row['IndentifyID'], $resultStatusArray) !== false) ? true : false),
+                "AcademicYear" => $row['AcademicYear'],
+                "Permission" => $row['permission'],
+                "Email" => $row['Email'],
             ));
         }
     }
+    
     print json_encode($Return);
 } else {
     print json_encode($Return);

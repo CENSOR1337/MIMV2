@@ -32,14 +32,14 @@ if (isset($_POST['Identify'], $_POST['Firstname'], $_POST['Lastname'], $_POST['E
     $BirthDate = $BirthYears . '-' . $BirthMonths . '-' . $BirthDays;
 
     if (isset($StudentID)) {
-        $sql = "INSERT INTO `Profiles` (`IndentifyID`, `StudentID`, `Firstname`, `Lastname`,
+        $sql = "INSERT INTO `Profiles` (`IndentifyID`, `StudentID`, `Firstname`, `Lastname`,`Email` ,
         `Gender`, `BirthDate`, `Degree`, `Room`, `AcademicYear`, `permission`)
-        VALUES ('$Identify', '$StudentID', '$Firstname', '$Lastname', '$Gender', '$BirthDate', '$Degree', '$Room',
+        VALUES ('$Identify', '$StudentID', '$Firstname', '$Lastname',  '$Email', '$Gender', '$BirthDate', '$Degree', '$Room',
         '$AcademicYear', 'pending');";
     } else {
-        $sql = "INSERT INTO `Profiles` (`IndentifyID`, `Firstname`, `Lastname`,
+        $sql = "INSERT INTO `Profiles` (`IndentifyID`, `Firstname`, `Lastname`,`Email` ,
         `Gender`, `BirthDate`, `Degree`, `Room`, `AcademicYear`, `permission`)
-        VALUES ('$Identify', '$Firstname', '$Lastname', '$Gender', '$BirthDate', '$Degree', '$Room',
+        VALUES ('$Identify', '$Firstname', '$Lastname',  '$Email', '$Gender', '$BirthDate', '$Degree', '$Room',
         '$AcademicYear', 'pending');";
     }
 

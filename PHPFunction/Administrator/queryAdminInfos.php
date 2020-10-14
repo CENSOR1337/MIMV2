@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ob_start();
 ob_end_clean();
 
@@ -19,14 +19,14 @@ if (!($Debug)) {
     }
 }
 
-$sql = "SELECT ( SELECT COUNT(*) FROM `AccessibleProfiles`) AS accessibleProfiles , (SELECT COUNT(*) FROM `Profiles`) AS registered,(SELECT COUNT(*) FROM `Profiles` WHERE `permission` LIKE 'suspended') AS suspended,(SELECT COUNT(*) FROM `Profiles` WHERE `permission` LIKE 'pending') AS pending";
+$sql = "SELECT ( SELECT COUNT(*) FROM `AccessibleProfiles`) AS AccessibleProfiles , (SELECT COUNT(*) FROM `Profiles`) AS registered,(SELECT COUNT(*) FROM `Profiles` WHERE `permission` LIKE 'suspended') AS suspended,(SELECT COUNT(*) FROM `Profiles` WHERE `permission` LIKE 'pending') AS pending";
 
 $result = $conn->query($sql);
 $Return = null;
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $Return = array("accessibleProfiles" => $row['accessibleProfiles'],
+        $Return = array("accessibleProfiles" => $row['AccessibleProfiles'],
             "registered" => $row['registered'],
             "suspended" => $row['suspended'],
             "pending" => $row['pending']
