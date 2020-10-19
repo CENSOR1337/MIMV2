@@ -12,6 +12,13 @@ return;
  */
 require_once '../../../config/connects.php';
 
+if (!($Debug)) {
+    if (!(isset($_SESSION['AdministratorAuth']))) {
+        print json_encode("invalidAuth");
+        return;
+    }
+}
+
 if (isset($_POST['toDeleteArray'])) {
 
     $toDelete = json_decode(stripslashes($_POST['toDeleteArray']));

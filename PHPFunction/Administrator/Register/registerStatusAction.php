@@ -13,7 +13,7 @@ return;
 require_once '../../../config/connects.php';
 
 if (!($Debug)) {
-    if (!(isset($_SESSION['AdministratoAuth']))) {
+    if (!(isset($_SESSION['AdministratorAuth']))) {
         print json_encode("invalidAuth");
         return;
     }
@@ -37,10 +37,13 @@ if (isset($_POST['studentID'], $_POST['action'])) {
             $IndentifyID = $row['IndentifyID'];
             $Username = $row['IndentifyID'];
             $UserStatus = ($row['permission'] == 'verified' ? true : false);
+            
+            $hashedPassword = password_hash($DefaultPassword, PASSWORD_DEFAULT);;
 
             switch ($action) {
                 case 'verified':
-                    $sqlInsert = "INSERT INTO `LoginInfo` (`IndentifyID`, `Username`, `Password`, `UserStatus`) VALUES ('$IndentifyID', '$Username', '$DefaultPassword', '1')";
+                    $sqlInsert = "INSERT INTO `LoginInfo` (`IndentifyID`, `Username`, `Password`, `UserStatus`) 
+                    VALUES ('$IndentifyID', '$Username', '$hashedPassword', '1')";
                     break;
 
                 case 'suspended':

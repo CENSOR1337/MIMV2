@@ -15,11 +15,22 @@ if (isset($_POST['username'], $_POST['password'])) {
     $username = mysqli_escape_string($conn, $_POST['username']);
     $password = mysqli_escape_string($conn, $_POST['password']);
 
-    $sql = "SELECT * FROM `LoginInfo` WHERE `Username` LIKE '$username' AND `Password` LIKE '$password' AND `UserStatus` = 1 AND `Role` = 'admin'";
+    $sql = "SELECT * FROM `LoginInfo` WHERE `Username` LIKE '$username' AND `UserStatus` = 1";
 
-    if ($conn->multi_query($sql)) {
-        print json_encode(true);
-        $_SESSION['AdministratoAuth'] = $username;
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $hash = $row['Password'];
+            if (password_verify($password, $hash)) {
+                print json_encode(true);
+                $_SESSION['AdministratorAuth'] = $username;
+                $_SESSION['AdministratorPermission'] = $row['Role'];
+            } else {
+                print json_encode(false);
+
+            }
+        }
     } else {
         print json_encode(false);
     }

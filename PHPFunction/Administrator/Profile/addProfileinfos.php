@@ -9,11 +9,12 @@ if(!(isset($_SESSION['username']))){
 print json_encode('Please Login');
 return;
 }
- */
+*/
+
 require_once '../../../config/connects.php';
 
 if (!($Debug)) {
-    if (!(isset($_SESSION['AdministratoAuth']))) {
+    if (!(isset($_SESSION['AdministratorAuth']))) {
         print json_encode("invalidAuth");
         return;
     }

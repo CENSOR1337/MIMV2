@@ -2,7 +2,7 @@
 session_start();
 require '../config/config.php';
 if (!($Debug)) {
-    if (!(isset($_SESSION['AdministratoAuth']))) {
+    if (!(isset($_SESSION['AdministratorAuth']))) {
         header("location: ./index.php");
     }
 }
@@ -113,7 +113,7 @@ if (!($Debug)) {
                 <!--<img src="images/avatar/avatar-7.png" alt="" class="circle responsive-img valign profile-image cyan">-->
               </div>
               <div class="col col s8 m8 l8">
-                <a class="white-text profile-btn"><?php echo $_SESSION['AdministratoAuth']?><i
+                <a class="white-text profile-btn"><?php echo $_SESSION['AdministratorAuth']?><i
                     class="mdi-navigation-arrow-drop-down right"></i></a>
                 <p class="user-roal">ผู้ดูแลระบบ</p>
               </div>

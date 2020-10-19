@@ -55,7 +55,12 @@
 </html>
 
 <?php
-
+if (!($Debug)) {
+    if (!(isset($_SESSION['AdministratorAuth']))) {
+        print json_encode("invalidAuth");
+        return;
+    }
+}
 function InsertProfileIntoDB($ProfileArray)
 {
 
