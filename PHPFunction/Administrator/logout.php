@@ -2,6 +2,6 @@
 
 session_start();
 
-unset($_SESSION['AdministratoAuth']);
+unset($_SESSION['AdministratorAuth']);
 
 print json_encode(true);

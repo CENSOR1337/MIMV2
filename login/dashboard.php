@@ -74,11 +74,13 @@ if (!($Debug)) {
               </h1>
             </li>
           </ul>
+          <!--
           <div class="header-search-wrapper hide-on-med-and-down">
             <i class="material-icons">search</i>
             <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="ค้นหา" />
           </div>
-<!--
+-->
+          <!--
           <ul class="right hide-on-med-and-down">
             <li>
               <a href="javascript:void(0);" class="waves-effect waves-block waves-light profile-button"
@@ -91,7 +93,7 @@ if (!($Debug)) {
             </li>
             <li>
 -->
-            </li>
+          </li>
           </ul>
         </div>
       </nav>
@@ -249,7 +251,7 @@ if (!($Debug)) {
                           <div class="row">
                             <div class="input-field col">
                               <center>
-                                <a id="updateDatatable_0" onclick="QueryProfileInfo(true);"
+                                <a id="updateDatatable_0" onclick="queryAllData();"
                                   class="waves-effect waves-light btn"><i
                                     class="material-icons left white-text">sync</i>อัปเดตข้อมูล</a>
                               </center>
@@ -279,7 +281,6 @@ if (!($Debug)) {
                       </div>
                       <table class="display responsive-table" id="Datatable_0" style="padding-top: 25px;">
                         <thead>
-                          <th class="center">สถานะการยืนยัน</th>
                           <th class="">รหัสประจำตัวประชาชน</th>
                           <th class="">ชื่อ</th>
                           <th class="">นามสกุล</th>
@@ -313,7 +314,7 @@ if (!($Debug)) {
                           <div class="row">
                             <div class="input-field col">
                               <center>
-                                <a id="updateDatatable_1" onclick="QueryRegisterInfos(true);"
+                                <a id="updateDatatable_1" onclick="queryAllData();"
                                   class="waves-effect waves-light btn"><i
                                     class="material-icons left white-text">sync</i>อัปเดตข้อมูล</a>
                               </center>
@@ -453,9 +454,26 @@ if (!($Debug)) {
   <script type="text/javascript" src="js/custom-script.js"></script>
   <script>
     $('#CsvUploader').click(function () {
-      $('#csvUpload').trigger('click');
+      Swal.fire({
+        title: `นำเข้าข้อมูล`,
+        text: `กรุณายืนยันเพื่อนำเข้าข้อมูลนักเรียน`,
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonText: `ยืนยัน`,
+        cancelButtonText: `ยกเลิก`,
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          $('#csvUpload').trigger('click');
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
+      
     });
     $("#csvUpload").change(function () {
+      
       $('#FormUploader').trigger('submit');
     });
   </script>
@@ -579,11 +597,7 @@ if (!($Debug)) {
       ];
 
 
-      editChain = [{
-          title: 'เลขประจำตัวประชาชน',
-          inputValue: IdentifyID,
-          text: 'กรอกหมายเลขที่ต้องการแก้ไข'
-        },
+      editChain = [
         {
           title: 'เลขประจำตัวนักเรียน',
           inputValue: StudentID,
@@ -707,11 +721,11 @@ if (!($Debug)) {
 
 
 
-              BirthDateNew = parseInt(answers[4]) + " " + months_th[parseInt(answers[5]) - 1] + " " + (parseInt(
-                answers[6]));
-              Gender = (answers[8] == "male" ? 'ชาย' : 'หญิง');
+              BirthDateNew = parseInt(answers[3]) + " " + months_th[parseInt(answers[4]) - 1] + " " + (parseInt(
+                answers[5]));
+              Gender = (answers[7] == "male" ? 'ชาย' : 'หญิง');
 
-              switch (answers[10]) {
+              switch (answers[9]) {
                 case 'personnel':
                   Role = 'บุคลากร';
                   break;
@@ -721,7 +735,7 @@ if (!($Debug)) {
                   break;
               }
 
-              switch (answers[11]) {
+              switch (answers[10]) {
                 case 'pending':
                   Permission = 'รอการยืนยัน';
                   break;
@@ -751,15 +765,15 @@ if (!($Debug)) {
                   '                <tbody>' +
                   '                    <tr>' +
                   '                        <td colspan="1" class="right-align"><b>เลขประจำตัวประชาชน : </b></td>' +
-                  '                        <td colspan="3">' + answers[0] + '</td>' +
+                  '                        <td colspan="3">' + IdentifyID + '</td>' +
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td colspan="1" class="right-align"><b>เลขประจำตัวนักเรียน : </b></td>' +
-                  '                        <td colspan="3">' + answers[1] + '</td>' +
+                  '                        <td colspan="3">' + answers[0] + '</td>' +
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td colspan="1" class="right-align"><b>ชื่อ - สกุล : </b></td>' +
-                  '                        <td colspan="3">' + answers[2] + ' ' + answers[3] + '</td>' +
+                  '                        <td colspan="3">' + answers[1] + ' ' + answers[2] + '</td>' +
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td colspan="1" class="right-align"><b>วันเกิด : </b></td>' +
@@ -767,13 +781,13 @@ if (!($Debug)) {
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td colspan="1" class="right-align"><b>อีเมล : </b></td>' +
-                  '                        <td colspan="3">' + answers[7] + '</td>' +
+                  '                        <td colspan="3">' + answers[6] + '</td>' +
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td class="right-align"><b>เพศ : </b></td>' +
                   '                        <td>' + Gender + '</td>' +
                   '                        <td class="right-left"><b>ปีการศึกษา : </b></td>' +
-                  '                        <td>' + answers[9] + '</td>' +
+                  '                        <td>' + answers[8] + '</td>' +
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td class="right-align"><b>ประเภทผู้ใช้ : </b></td>' +
@@ -783,9 +797,9 @@ if (!($Debug)) {
                   '                    </tr>' +
                   '                    <tr>' +
                   '                        <td class="right-align"><b>มัธยมปีที่ : </b></td>' +
-                  '                        <td>' + answers[12] + '</td>' +
+                  '                        <td>' + answers[11] + '</td>' +
                   '                        <td class="right-left"><b>ห้องที่ : </b></td>' +
-                  '                        <td>' + answers[13] + '</td>' +
+                  '                        <td>' + answers[12] + '</td>' +
                   '                    </tr>' +
                   '                </tbody>' +
                   '            </table>' +
@@ -797,7 +811,7 @@ if (!($Debug)) {
                 if (result.isConfirmed) {
                   if (!answers[0] || !answers[1] || !answers[2] || !answers[3] || !answers[4] || !answers[
                       5] || !answers[6] || !answers[7] || !answers[8] || !answers[9] || !answers[10] || !
-                    answers[11] || !answers[12] || !answers[13]) {
+                    answers[11] || !answers[12]) {
                     NotifyError('กรุณากรอกข้อมูลให้ครบถ้วน');
 
                     return;
@@ -812,18 +826,17 @@ if (!($Debug)) {
                     dataType: "json",
                     data: {
                       toEditIndentifyID: IdentifyID,
-                      IdentifyID: answers[0],
-                      StudentID: answers[1],
-                      Firstname: answers[2],
-                      Lastname: answers[3],
-                      BirthDate: (parseInt(answers[6]) - 543) + '-' + answers[5] + '-' + answers[4],
-                      Email: answers[7],
-                      Gender: answers[8],
-                      AcademicYear: answers[9],
-                      Status: answers[10],
-                      Permission: answers[11],
-                      Degree: answers[12],
-                      Room: answers[13]
+                      StudentID: answers[0],
+                      Firstname: answers[1],
+                      Lastname: answers[2],
+                      BirthDate: (parseInt(answers[5]) - 543) + '-' + answers[4] + '-' + answers[3],
+                      Email: answers[6],
+                      Gender: answers[7],
+                      AcademicYear: answers[8],
+                      Status: answers[9],
+                      Permission: answers[10],
+                      Degree: answers[11],
+                      Room: answers[12]
 
                     }
 
@@ -839,7 +852,7 @@ if (!($Debug)) {
                         timer: 1500
                       }).then((result) => {
                         if (!(result.isConfirmed)) {
-                          QueryProfileInfo();
+                          queryAllData();
                         }
                       })
                     } else {
@@ -1014,7 +1027,7 @@ if (!($Debug)) {
               '<center><a href="#" onclick="doDeleteProfile ' + DeleteParameter +
               ';"><i class="material-icons large-icon red-text">delete</i></a></center>';
 
-            row.push([Status, element['IndentifyID'], element['Firstname'], element['Lastname'], (element[
+            row.push([element['IndentifyID'], element['Firstname'], element['Lastname'], (element[
                 'Status'] == 'student' ? "นักเรียน" : "บุคลากร"),
               element['StudentID'], Edit, Delete
             ]);
@@ -1148,7 +1161,7 @@ if (!($Debug)) {
                     timer: 1500
                   }).then((result) => {
                     if (!(result.isConfirmed)) {
-                      QueryProfileInfo();
+                      queryAllData();
                     }
                   })
                 } else {
@@ -1203,7 +1216,7 @@ if (!($Debug)) {
                 timer: 1500
               }).then((result) => {
                 if (!(result.isConfirmed)) {
-                  QueryProfileInfo();
+                  queryAllData();
                 }
               })
 
@@ -1342,7 +1355,7 @@ if (!($Debug)) {
                 timer: 1500
               }).then((result) => {
                 if (!(result.isConfirmed)) {
-                  QueryProfileInfo();
+                  queryAllData();
                 }
               })
 
@@ -1481,7 +1494,7 @@ if (!($Debug)) {
                         timer: 1500
                       }).then((result) => {
                         if (!(result.isConfirmed)) {
-                          QueryProfileInfo();
+                          queryAllData();
                         }
                       })
                     } else {
@@ -1571,7 +1584,7 @@ if (!($Debug)) {
                     timer: 1500
                   }).then((result) => {
                     if (!(result.isConfirmed)) {
-                      QueryProfileInfo();
+                      queryAllData();
                     }
                   })
                   break;
@@ -1584,7 +1597,7 @@ if (!($Debug)) {
                     timer: 1500
                   }).then((result) => {
                     if (!(result.isConfirmed)) {
-                      QueryProfileInfo();
+                      queryAllData();
                     }
                   })
                   break;
@@ -1598,14 +1611,14 @@ if (!($Debug)) {
                     timer: 1500
                   }).then((result) => {
                     if (!(result.isConfirmed)) {
-                      QueryProfileInfo();
+                      queryAllData();
                     }
                   })
 
 
                   break;
               }
-              QueryRegisterInfos();
+              queryAllData();
             }
           });
 
@@ -1651,7 +1664,7 @@ if (!($Debug)) {
               '</span></center>';
             NotVerified = '<center><span onclick="changeRegisterPermission ' + NotVerifiedParm +
               ';" class="chip blue lighten-5">' +
-              '<span class="blue-text">ไม่ได้รับการยืนยัน</span>' +
+              '<span class="blue-text">รอการยืนยัน</span>' +
               '</span></center>';
             Suspended = '<center><span onclick="changeRegisterPermission ' + SuspendedParm +
               ';" class="chip red lighten-5">' +
@@ -1794,6 +1807,14 @@ if (!($Debug)) {
       updateDeleteButton('SelectedRegister', $('#Datatable_1').DataTable().rows('.selected').data());
       updateDeleteButton('SelectedProfile', $('#Datatable_0').DataTable().rows('.selected').data());
 
+    }
+
+    function queryAllData(isRecall = false) {
+      $('#Datatable_0').DataTable().rows().remove().draw();
+      $('#Datatable_1').DataTable().rows().remove().draw();
+      QueryRegisterInfos(isRecall);
+      QueryProfileInfo(isRecall);
+      
 
     }
 
@@ -1819,7 +1840,7 @@ if (!($Debug)) {
 
       QueryAdministratoInfo();
       QueryProfileInfo();
-      QueryRegisterInfos();
+      queryAllData();
 
       $('#Datatable_1 tbody').on('click', 'tr', function () {
         $(this).toggleClass('selected');
@@ -1861,33 +1882,33 @@ if (!($Debug)) {
         if (result.isConfirmed) {
 
           AjaxOBJ = $.ajax({
-        type: "POST",
-        url: "../PHPFunction/Administrator/logout.php",
-        error: function (ts) {
-          console.log(ts.responseText);
-        },
-        dataType: "json"
+            type: "POST",
+            url: "../PHPFunction/Administrator/logout.php",
+            error: function (ts) {
+              console.log(ts.responseText);
+            },
+            dataType: "json"
 
-      });
+          });
 
-      AjaxOBJ.done(function (ResponsedMsg) {
-        console.log(ResponsedMsg);
-        if (ResponsedMsg) {
-          Swal.fire({
-            icon: 'success',
-            title: 'ออกจากระบบสำเร็จ',
-            showConfirmButton: false,
-            timer: 5000
-          }).then((result) => {
-            window.location="./";
-          })
-        } else {
-          header( "location: ./" );
-        }
-      });
-      AjaxOBJ.fail(function () {
-        NotifyError('เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
-      });
+          AjaxOBJ.done(function (ResponsedMsg) {
+            console.log(ResponsedMsg);
+            if (ResponsedMsg) {
+              Swal.fire({
+                icon: 'success',
+                title: 'ออกจากระบบสำเร็จ',
+                showConfirmButton: false,
+                timer: 5000
+              }).then((result) => {
+                window.location = "./";
+              })
+            } else {
+              header("location: ./");
+            }
+          });
+          AjaxOBJ.fail(function () {
+            NotifyError('เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
+          });
         }
       })
 

@@ -23,9 +23,9 @@
         }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-            window.location = "../../../Administrator/";
+            window.location = "../../../login/";
         } else {
-            window.location = "../../../Administrator/";
+            window.location = "../../../login/";
         }
         })
     }
@@ -42,9 +42,9 @@
         }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-            window.location = "../../../Administrator/";
+            window.location = "../../../login/";
         } else{
-            window.location = "../../../Administrator/";
+            window.location = "../../../login/";
         }
         })
     };
@@ -55,12 +55,7 @@
 </html>
 
 <?php
-if (!($Debug)) {
-    if (!(isset($_SESSION['AdministratorAuth']))) {
-        print json_encode("invalidAuth");
-        return;
-    }
-}
+
 function InsertProfileIntoDB($ProfileArray)
 {
 

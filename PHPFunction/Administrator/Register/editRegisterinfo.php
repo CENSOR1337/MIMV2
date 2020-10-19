@@ -18,10 +18,9 @@ if (!($Debug)) {
         return;
     }
 }
-if (isset($_POST['IdentifyID'], $_POST['Firstname'], $_POST['Lastname'], $_POST['Status'], $_POST['StudentID'], $_POST['toEditIndentifyID'], $_POST['IdentifyID'], $_POST['BirthDate'], $_POST['Email'], $_POST['Gender'], $_POST['AcademicYear'], $_POST['Status'], $_POST['Permission'], $_POST['Degree'], $_POST['Room'])) {
+if (isset($_POST['Firstname'], $_POST['Lastname'], $_POST['Status'], $_POST['StudentID'], $_POST['toEditIndentifyID'], $_POST['BirthDate'], $_POST['Email'], $_POST['Gender'], $_POST['AcademicYear'], $_POST['Status'], $_POST['Permission'], $_POST['Degree'], $_POST['Room'])) {
 
     $toEditIndentifyID = mysqli_escape_string($conn, $_POST['toEditIndentifyID']);
-    $IdentifyID = mysqli_escape_string($conn, $_POST['IdentifyID']);
     $StudentID = mysqli_escape_string($conn, $_POST['StudentID']);
     $Firstname  = mysqli_escape_string($conn, $_POST['Firstname']);
     $Lastname  = mysqli_escape_string($conn, $_POST['Lastname']);
@@ -34,7 +33,7 @@ if (isset($_POST['IdentifyID'], $_POST['Firstname'], $_POST['Lastname'], $_POST[
     $Degree  = mysqli_escape_string($conn, $_POST['Degree']);
     $Room  = mysqli_escape_string($conn, $_POST['Room']);    
     
-    $sql = "UPDATE `Profiles` SET `IndentifyID` = '$toEditIndentifyID', `StudentID` = '$StudentID', `Firstname` = ' $Firstname', `Lastname` = '$Lastname', `Gender` = '$Gender', `BirthDate` = '$BirthDate', `Degree` = '$Degree', `Room` = '$Room', `Status` = '$Status', `AcademicYear` = '$AcademicYear', `permission` = '$Permission', `Email` = '$Email' WHERE `Profiles`.`IndentifyID` = '$toEditIndentifyID'";
+    $sql = "UPDATE `Profiles` SET `StudentID` = '$StudentID', `Firstname` = ' $Firstname', `Lastname` = '$Lastname', `Gender` = '$Gender', `BirthDate` = '$BirthDate', `Degree` = '$Degree', `Room` = '$Room', `Status` = '$Status', `AcademicYear` = '$AcademicYear', `permission` = '$Permission', `Email` = '$Email' WHERE `Profiles`.`IndentifyID` = '$toEditIndentifyID'";
 
 
     if ($conn->query($sql) === true) {

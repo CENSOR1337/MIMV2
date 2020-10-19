@@ -72,7 +72,12 @@
 											<div class="indeterminate"></div>
 										</div>
 										<button id="CheckIDButton" class="btn waves-effect waves-light deep-purple"
-											type="button" onclick="QueryIdentifyID();">เริ่มลงทะเบียน</button>
+											type="button" onclick="QueryIdentifyID();">ตรวจสอบสิทธิ์</button>
+										<br>
+										<br>
+										<button class="btn waves-effect waves-light deep-blue" type="button"
+											onclick="checkingStatus();">ตรวจสอบสถานะการลงทะเบียน</button>
+
 									</center>
 								</div>
 							</div>
@@ -191,7 +196,7 @@
 				icon: 'success',
 				title: firstname + ' ' + lastname,
 				html: 'ได้ทำการลงทะเบียนเรียบร้อยแล้ว',
-				footer: 'หากต้องการแก้ไขข้อมูลกรุณาเข้าสู่ระบบ',
+				footer: 'กรุณาติดต่อผู้ดูแลระบบเพื่อยืนยัน',
 				confirmButtonText: 'เข้าใจแล้ว'
 			}).then((result) => {
 				StartChangeContent('Form_2', 'Form_1');
@@ -429,11 +434,6 @@
 			AjaxOBJ = $.ajax({
 				type: "POST",
 				url: "./PHPFunction/QueryProfileIdentify.php",
-				error: function (ts) {
-					alert(ts.responseText);
-					ToggleLoadingBar(false);
-					ToggleForm_1(true);
-				}, // or console.log(ts.responseText)
 				dataType: "json",
 				data: {
 					Identify: Identify,
@@ -477,6 +477,100 @@
 			});
 
 		};
+
+		function checkingStatus() {
+			Swal.fire({
+				title: 'รหัสประจำตัวประชาชน',
+				input: 'text',
+				cancelButtonText: 'ยกเลิก',
+				showCancelButton: true,
+				confirmButtonText: 'ตรวจสอบ',
+
+			}).then((result) => {
+				queryUsername = result.value;
+				if (result.isConfirmed) {
+					if (!queryUsername) {
+						Swal.fire({
+							icon: 'error',
+							title: 'กรุณาป้อนข้อมูลก่อน',
+							confirmButtonText: 'ตกลง'
+						})
+					} else {
+						AjaxOBJ = $.ajax({
+							error: function (ts) {
+								alert(ts.responseText);
+								ToggleLoadingBar(false);
+								ToggleForm_1(true);
+							}, // or console.log(ts.responseText)
+							type: "POST",
+							url: "./PHPFunction/queryCheckingStatus.php",
+							dataType: "json",
+							data: {
+								checkingID: queryUsername
+							}
+						});
+
+						AjaxOBJ.done(function (ResponsedMsg) {
+							if (ResponsedMsg) {
+								switch (ResponsedMsg['permission']) {
+									case 'notFound':
+										Swal.fire({
+											icon: 'error',
+											title: 'ไม่พบ',
+											text: 'ไม่พบข้อมูลที่ค้นหา',
+											confirmButtonText: 'ตกลง'
+
+										});
+										break;
+									case 'pending':
+										Swal.fire({
+											icon: 'info',
+											title: 'รอการยืนยัน',
+											text: 'ต้องการเอกสารสำหรับการยืนยันหรือไม่',
+											confirmButtonText: 'พิมพ์เอกสาร',
+											showCancelButton: true,
+											cancelButtonText: 'ยกเลิก'
+
+										}).then((result) => {
+											
+											if (result.isConfirmed) {
+												Swal.fire('Saved!', '', 'success')
+											} else if (result.isDenied) {
+												Swal.fire('Changes are not saved', '', 'info')
+											}
+										})
+										break;
+									case 'verified':
+										BirthDate = ResponsedMsg['BirthDate'].split("-");
+										Swal.fire({
+											type: 'success',
+											title: 'ยืนยันการลงทะเบียนแล้ว',
+											text: 'ชื่อผู้ใช้ : ' + ResponsedMsg['IndentifyID'] +
+												' รหัสผ่านเริ่มต้น : ' +
+												BirthDate[2] + BirthDate[1] + BirthDate[0],
+											footer: 'สามารถเข้าใช้งานได้ทันที',
+											confirmButtonText: 'เข้าใจแล้ว',
+										})
+										break;
+									case 'suspended':
+
+										break;
+								}
+
+							} else {
+								alert("Error!");
+							}
+						});
+
+						AjaxOBJ.fail(function () {
+							alert('Failed');
+							ToggleLoadingBar(false);
+							ToggleForm_1(true);
+						});
+					}
+				}
+			})
+		}
 
 		function EndChangeContent(ID, Value) {
 			document.getElementById(ID).style.display = "none";

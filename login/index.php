@@ -1,9 +1,10 @@
 <?php
 session_start();
-if ((isset($_SESSION['AdministratoAuth']))) {
-     
+if ((isset($_SESSION['AdministratorAuth']))) {
+
     header("location: ./dashboard.php");
     return;
+
 }
 
 ?>
@@ -52,7 +53,7 @@ if ((isset($_SESSION['AdministratoAuth']))) {
                 <form action="" method="POST" class="login100-form validate-form">
                     <div id="FormFirst" class="vertical-center-form">
                         <span class="login100-form-title">
-                            ระบบลงทะเบียน
+                            เข้าสู่ระบบ
                         </span>
                         <div class="wrap-input100 validate-input">
                             <div class="row">
@@ -67,23 +68,36 @@ if ((isset($_SESSION['AdministratoAuth']))) {
                                     <label for="password">รหัสผ่าน</label>
                                 </div>
                             </div>
+
                             <div class="row">
+
                                 <div class="input-field col s12">
-                                    <center>
-                                        <button onclick="QueryLogin();" class="btn waves-effect waves-light deep-purple"
-                                            type="button">เข้าสู่ระบบ</button>
-                                    </center>
+
+                                    <div style="display: none;" id="LoadingBar" class="progress">
+                                        <div class="indeterminate"></div>
+                                    </div>
+
                                 </div>
                             </div>
+                            <center>
+                            <div class="row">
+                                <div class="col s6">
+                                    <button onclick="QueryLogin();" class="btn waves-effect waves-light deep-purple"
+                                        type="button">เข้าสู่ระบบ</button>
+
+                                </div>
+                                <div class="col s6">
+                                    <button id="CheckIDButton" class="btn waves-effect waves-light deep-blue"
+                                        type="button" onclick="location.href='../'">ย้อนกลับ</button>
+                                </div>
+                            </div>
+                            </center>
                         </div>
-
-                </form>
-
-
-
-
+                    </div>
             </div>
+            </form>
         </div>
+    </div>
     </div>
 
 
@@ -140,7 +154,7 @@ if ((isset($_SESSION['AdministratoAuth']))) {
                             showConfirmButton: false,
                             timer: 2000
                         }).then((result) => {
-                            window.location="./";
+                            window.location = "./";
                         })
                     } else {
                         NotifyError('ไม่พบข้อมูลนี้');
