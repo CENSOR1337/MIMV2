@@ -186,6 +186,17 @@
 		</table>
 	</div>
 
+	<script>
+		// Init
+		var months_th = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+			"กันยายน",
+			"ตุลาคม", "พฤศจิกายน", "ธันวาคม",
+		];
+		var months_th_mini = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.",
+			"ธ.ค.",
+		];
+	</script>
+
 	<!--<body onload="DataMismatch('asdfadf','sdfasdf','asdfasdf');">	
 	</body> --->
 	<script>
@@ -512,6 +523,7 @@
 
 						AjaxOBJ.done(function (ResponsedMsg) {
 							if (ResponsedMsg) {
+								console.log(ResponsedMsg);
 								switch (ResponsedMsg['permission']) {
 									case 'notFound':
 										Swal.fire({
@@ -532,9 +544,62 @@
 											cancelButtonText: 'ยกเลิก'
 
 										}).then((result) => {
-											
 											if (result.isConfirmed) {
-												Swal.fire('Saved!', '', 'success')
+
+
+
+												dbBirthDate = ResponsedMsg['BirthDate'];
+												dbSplit = dbBirthDate.split("-");
+
+												Month = months_th[parseInt(dbSplit[1]) - 1];
+												identifyID = ResponsedMsg['IndentifyID'];
+												studentID = ResponsedMsg['StudentID'];
+												fullName = ResponsedMsg['Firstname'] + " " +
+													ResponsedMsg['Firstname'];
+												BirthDate = dbSplit[2] + " " + Month + " " + (
+													parseInt(dbSplit[0]) + 543);
+
+
+
+												email = ResponsedMsg['Email'];
+												gender = (ResponsedMsg['Gender'] == 'male' ? 'ชาย' :
+													'หญิง');
+												academicYear = ResponsedMsg['AcademicYear'];
+												status = (ResponsedMsg['Status'] == 'student' ?
+													'นักเรียน' : 'บุคลากร');
+
+												switch (ResponsedMsg['permission']) {
+													case 'pending':
+														permission = 'รอการยืนยัน';
+														break;
+
+													case 'verified':
+														permission = 'ยืนยันแล้ว';
+														break;
+
+													case 'suspended':
+														permission = 'ระงับใช้งาน';
+														break;
+													default:
+														break;
+												}
+
+												studentYear = ResponsedMsg['Degree'];
+												room = ResponsedMsg['Room'];
+												Location = "./PHPFunction/printGenerator.php?identifyID="+ identifyID;
+												Location += "&studentID=" + studentID;
+												Location += "&fullName=" + fullName;
+												Location += "&birthDate=" + BirthDate;
+												Location += "&email=" + email;
+												Location += "&gender=" + gender;
+												Location += "&academicYear=" + academicYear;
+												Location += "&status=" + status;
+												Location += "&permission=" + permission;
+												Location += "&studentYear=" + studentYear;
+												Location += "&room=" + room;
+												console.log(Location);
+												window.open(Location,'_blank');
+
 											} else if (result.isDenied) {
 												Swal.fire('Changes are not saved', '', 'info')
 											}
@@ -620,13 +685,6 @@
 			}
 		}
 
-		var months_th = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-			"กันยายน",
-			"ตุลาคม", "พฤศจิกายน", "ธันวาคม",
-		];
-		var months_th_mini = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.",
-			"ธ.ค.",
-		];
 
 
 		for (let i = 0; i < 5; i++) {
